@@ -26,6 +26,8 @@
 
   fileSystems."/run/media/Acer" =
     { device = "/dev/sda4";
+      fsType = "ntfs";
+      options = [ "uid=1000" "gid=100" "dmask=000" "fmask=000" ];
     };
 
   fileSystems."/boot/efi" =
@@ -45,3 +47,4 @@
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
+

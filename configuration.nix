@@ -26,8 +26,8 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  networking.proxy.default = "socks5://127.0.0.1:10808/";
+  networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -61,6 +61,11 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  # Enable KDE
+  #services.xserver.displayManager.sddm.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
+  
+  
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
@@ -114,8 +119,14 @@
       thunderbird
       haruna
       git
+      gnome.gedit
+      tdesktop
     ];
   };
+  
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-12.2.3"
+  ];
   
  environment.sessionVariables = {
    MOZ_ENABLE_WAYLAND = "1";
@@ -136,8 +147,12 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   #  wget
+  #  appimage-run
     v2ray
   ];
+  
+  # Use Chinese mirror 
+  # nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -156,7 +171,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
