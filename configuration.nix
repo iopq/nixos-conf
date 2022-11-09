@@ -3,14 +3,34 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  nix-software-center = (import (pkgs.fetchFromGitHub {
+    owner = "vlinkz";
+    repo = "nix-software-center";
+    rev = "0.1.0";
+    sha256 = "d4LAIaiCU91LAXfgPCWOUr2JBkHj6n0JQ25EqRIBtBM=";
+  })) {};
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-  # 
+
+    
+  # Suspend-then-hibernate everywhere
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    extraConfig = ''
+      HandlePowerKey=suspend-then-hibernate
+      IdleAction=suspend-then-hibernate
+      IdleActionSec=2m
+    '';
+  };
+  systemd.sleep.extraConfig = "HibernateDelaySec=20h";
+
+  # grub because we windows
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "nodev";
@@ -36,6 +56,9 @@
   services.v2ray.configFile = "/etc/nixos/config.json";
   services.v2ray.enable = true;
 
+  #services.xray.settingsFile = "/etc/nixos/config.json";
+  #services.xray.enable = true;
+
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
 
@@ -52,7 +75,7 @@
   #fonts
   fonts.fonts = with pkgs; [
     noto-fonts-cjk
-];
+  ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -121,16 +144,27 @@
       git
       gnome.gedit
       tdesktop
+      chromium
+      vlc
+      vscodium
+      polkit_gnome
+      polkit
+      onlyoffice-bin
+      libreoffice
+      meld
+      kdiff3
+      nix-software-center
     ];
   };
+
+  programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
+  programs.kdeconnect.enable = true;
   
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-12.2.3"
-  ];
+  security.polkit.enable = true;
   
- environment.sessionVariables = {
-   MOZ_ENABLE_WAYLAND = "1";
-};
+  environment.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = "1";
+  };
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
@@ -149,10 +183,20 @@
   #  wget
   #  appimage-run
     v2ray
+    gnome.dconf-editor
+    gnomeExtensions.gsconnect
+    iwd
+    gparted
+  #  xray
   ];
+
+  #networking.networkmanager.wifi.backend = "iwd";
+  #networking.wireless.iwd.enable = true;
+
+  services.flatpak.enable = true;
   
   # Use Chinese mirror 
-  # nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+  #nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
