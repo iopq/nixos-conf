@@ -17,18 +17,34 @@ in
       ./hardware-configuration.nix
     ];
 
+  boot.supportedFilesystems = [ "ntfs" ];
+  boot.kernelParams = [ "mitigations=off" ];
 
     
   # Suspend-then-hibernate everywhere
+  #services.logind = {
+  #  lidSwitch = "suspend-then-hibernate";
+  #  extraConfig = ''
+  #    HandlePowerKey=suspend-then-hibernate
+  #    IdleAction=suspend-then-hibernate
+  #    IdleActionSec=2m
+  #  '';
+  #};
+  #systemd.sleep.extraConfig = "HibernateDelaySec=20h";
+
+    # Suspend-then-hibernate everywhere
   services.logind = {
-    lidSwitch = "suspend-then-hibernate";
+    lidSwitch = "suspend";
     extraConfig = ''
-      HandlePowerKey=suspend-then-hibernate
-      IdleAction=suspend-then-hibernate
+      HandlePowerKey=suspend
+      IdleAction=suspend
       IdleActionSec=2m
     '';
   };
-  systemd.sleep.extraConfig = "HibernateDelaySec=20h";
+  
+  services.upower.criticalPowerAction = "Hibernate";
+
+  boot.kernel.sysctl = { "vm.swappiness" = 10;};
 
   # grub because we windows
   boot.loader.grub.enable = true;
@@ -42,7 +58,7 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "laptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -52,12 +68,10 @@ in
   # Enable networking
   networking.networkmanager.enable = true;
   
-  #enable v2ray
-  services.v2ray.configFile = "/etc/nixos/config.json";
-  services.v2ray.enable = true;
-
-  #services.xray.settingsFile = "/etc/nixos/config.json";
-  #services.xray.enable = true;
+  #journalctl -fu xray
+  #enable xray
+  services.xray.settingsFile = "/etc/nixos/config.json";
+  services.xray.enable = true;
 
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
@@ -74,13 +88,15 @@ in
   
   #fonts
   fonts.fonts = with pkgs; [
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    babelstone-han
   ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
+  # Enable the GNOME Desktop Environment.nix.settings.experimental-features = [ "nix-command" "flakes" ];
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
@@ -153,9 +169,31 @@ in
       libreoffice
       meld
       kdiff3
+      smplayer #fix by using a package with mpv as the default package
+      mpv
+      audacity
+      pijul
       nix-software-center
+      etcher
+      krusader
+      elisa
+      psensor
+      cpu-x
+      cpupower-gui
+      busybox
+      #qt5ct
+      kodi
     ];
   };
+
+  services.cpupower-gui.enable = true;
+  systemd.services.cpupower-gui.enable = false; #the root one fails
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-12.2.3"
+  ];
+    
+  services.jellyfin.enable = true;
 
   programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
   programs.kdeconnect.enable = true;
@@ -164,7 +202,11 @@ in
   
   environment.sessionVariables = {
     MOZ_ENABLE_WAYLAND = "1";
+    HISTSIZE = "10000";
+    HISTFILESIZE = "10000";
   };
+
+  #programs.bash.promptInit = "shopt -s histappend";
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
@@ -174,6 +216,9 @@ in
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
+  # Enable flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -182,13 +227,19 @@ in
   environment.systemPackages = with pkgs; [
   #  wget
   #  appimage-run
-    v2ray
     gnome.dconf-editor
     gnomeExtensions.gsconnect
     iwd
     gparted
-  #  xray
+    qgnomeplatform
+    adwaita-qt
+    oxygen-icons5 #better icons for krusader
+    libsForQt5.kio-extras #krusader image preview
+    gnome.gnome-user-share #sharing files
+    gnome.rygel
   ];
+
+  qt5.style = "adwaita-dark"; #dark mode in KDE apps
 
   #networking.networkmanager.wifi.backend = "iwd";
   #networking.wireless.iwd.enable = true;

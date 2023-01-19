@@ -24,10 +24,10 @@
       options = [ "bind" ];
     };
 
-  fileSystems."/run/media/Acer" =
+  fileSystems."/mnt/media/Acer" =
     { device = "/dev/sda4";
       fsType = "ntfs";
-      options = [ "uid=1000" "gid=100" "dmask=000" "fmask=000" ];
+      options = [ "rw" "uid=1000" "gid=100" "dmask=000" "fmask=000" ];
     };
 
   fileSystems."/boot/efi" =
@@ -36,17 +36,12 @@
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/c6930a02-eaad-44a3-a6bf-39a3260c6211"; }
+    [ { device = "/dev/sda7"; }
     ];
-
-  boot.resumeDevice = "/dev/disk/by-uuid/c6930a02-eaad-44a3-a6bf-39a3260c6211";
   
-    # Set up deep sleep + hibernation
-#  swapDevices = [
-#    { device = "/swapfile"; }
-#  ];
+  # Set up deep sleep + hibernation
   # Partition swapfile is on (after LUKS decryption)
-#  boot.resumeDevice = "/dev/disk/by-uuid/01d67437-1a65-44b6-b1e5-d3748ea6251b";
+  boot.resumeDevice = "/dev/sda7";
   # Resume Offset is offset of swapfile
   # https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation_into_swap_file
   #boot.kernelParams = [ "mem_sleep_default=deep" "resume_offset=12130304" ];
