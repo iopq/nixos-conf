@@ -166,7 +166,7 @@ in
       polkit_gnome
       polkit
       onlyoffice-bin
-      libreoffice
+      #libreoffice
       meld
       kdiff3
       smplayer #fix by using a package with mpv as the default package
@@ -235,11 +235,10 @@ in
     adwaita-qt
     oxygen-icons5 #better icons for krusader
     libsForQt5.kio-extras #krusader image preview
-    gnome.gnome-user-share #sharing files
-    gnome.rygel
+    #tts
   ];
 
-  qt5.style = "adwaita-dark"; #dark mode in KDE apps
+  qt.style = "adwaita-dark"; #dark mode in KDE apps
 
   #networking.networkmanager.wifi.backend = "iwd";
   #networking.wireless.iwd.enable = true;
