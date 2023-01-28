@@ -2,14 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   nix-software-center = (import (pkgs.fetchFromGitHub {
     owner = "vlinkz";
     repo = "nix-software-center";
     rev = "0.1.0";
     sha256 = "d4LAIaiCU91LAXfgPCWOUr2JBkHj6n0JQ25EqRIBtBM=";
-  })) {};
+  })) { inherit pkgs lib;};
 in
 {
   imports =
