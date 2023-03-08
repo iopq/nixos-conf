@@ -3,8 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-{
+let
+  stable = import <stable> {};
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -147,20 +148,21 @@
       gnome.gedit
       tdesktop
       steam
-      # discord
-      #playonlinux
       qbittorrent
       
       # wine-staging (version with experimental features)
-      wineWowPackages.staging
+      stable.wineWowPackages.staging
 
       # winetricks (all versions)
       winetricks
       
+      krita
       vlc
       kodi
       mplayer
       smplayer
+      
+      chromium
     ];
   };
   
