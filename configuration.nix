@@ -3,23 +3,13 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, ... }:
-let
-  overlay-stable = final: prev: {
-    stable = nixpkgs-stable.legacyPackages.${prev.system}; # considering nixpkgs-stable is an input registered before.
-  };
-in {
+{
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
  #     ./cachix.nix
       ./xraya/xraya.nix
     ];
-    
-  nixpkgs.overlays = [
-    overlay-stable
-    (_: _: { xray = pkgs.callPackage ./xray/default.nix {} ;} )  
-    (_: _: { v2raya = pkgs.callPackage ./xraya/default.nix {} ;} ) 
-  ];
  
   #boot.loader.grub.enable = true;
   #boot.loader.grub.version = 2;

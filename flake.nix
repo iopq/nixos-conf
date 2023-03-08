@@ -20,7 +20,10 @@
         inherit system;
         modules = [
           # Overlays-module makes "pkgs.stable" available in configuration.nix
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable
+            (_: _: { xray = pkgs.callPackage ./xray/default.nix {} ;} )  
+            (_: _: { v2raya = pkgs.callPackage ./xraya/default.nix {} ;} ) 
+          ]; })
           ./configuration.nix
         ];
       };
