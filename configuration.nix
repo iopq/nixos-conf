@@ -4,7 +4,9 @@
 
 { config, pkgs, lib, ... }:
 let
-  stable = import <stable> {};
+  overlay-stable = final: prev: {
+    stable = nixpkgs-stable.legacyPackages.${prev.system}; # considering nixpkgs-stable is an input registered before.
+  };
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -14,8 +16,8 @@ in {
     ];
     
   nixpkgs.overlays = [
+    overlay-stable
     (_: _: { xray = pkgs.callPackage ./xray/default.nix {} ;} )  
- #   (_: _: { v2ray = pkgs.callPackage /home/iopq/sw/v2ray/default.nix {} ;} )
     (_: _: { v2raya = pkgs.callPackage ./xraya/default.nix {} ;} ) 
   ];
  
@@ -30,7 +32,7 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "desktop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -38,8 +40,6 @@ in {
 #  networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain,192.168.2.0/8";
  
    services.gvfs.enable = true;
-  
-  # environment.sessionVariables.V2RAYA_V2RAY_CONFDIR = "/home/iopq/sw/xray-conf";
 
   # Enable networking
   networking.networkmanager.enable = true;
