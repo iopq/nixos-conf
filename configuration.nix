@@ -212,6 +212,7 @@
     busybox
     gnomeExtensions.gsconnect
     tts
+    inputs.nix-software-center.packages.${system}.nix-software-center
   ];
   
  # services.dnscrypt-proxy2.enable = false;
