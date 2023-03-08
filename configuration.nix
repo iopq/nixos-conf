@@ -10,13 +10,13 @@ in {
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
  #     ./cachix.nix
-      /home/iopq/sw/v2raya-nur/xraya.nix
+      ./xraya/xraya.nix
     ];
     
   nixpkgs.overlays = [
-    (_: _: { xray = pkgs.callPackage /home/iopq/sw/xray/default.nix {} ;} )  
+    (_: _: { xray = pkgs.callPackage ./xray/default.nix {} ;} )  
  #   (_: _: { v2ray = pkgs.callPackage /home/iopq/sw/v2ray/default.nix {} ;} )
-    (_: _: { v2raya = pkgs.callPackage /home/iopq/sw/v2raya-nur/default.nix {} ;} ) 
+    (_: _: { v2raya = pkgs.callPackage ./xraya/default.nix {} ;} ) 
   ];
  
   #boot.loader.grub.enable = true;
