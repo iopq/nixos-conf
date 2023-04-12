@@ -38,6 +38,7 @@
   services.xraya.enable = true;
   
   #enable xray
+  #journalctl -fu xray
   services.xray.settingsFile = "/etc/nixos/config.json";
 #  services.xray.enable = true;
 
