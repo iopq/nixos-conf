@@ -20,16 +20,16 @@ let
 in
 buildGoModule rec {
   pname = "xray";
-  version = "1.7.0";
+  version = "1.8.0";
 
   src = fetchFromGitHub {
     owner = "XTLS";
     repo = "Xray-core";
     rev = "v${version}";
-    sha256 = "sha256-aNIb90obew+tvd/rYVddK1MmUqLXSqi9xAu65BQFvk0=";
+    sha256 = "sha256-YonO856ax0RTkM3SwgsS/1HxijkaV5XUXvWYDL3NyvM=";
   };
 
-  vendorSha256 = "sha256-zZdUPjlul9f1jKy0Zf79KOToHIsvfgwDp6XpFPYyTzk=";
+  vendorSha256 = "sha256-lWeYuyzW8bR51LrFguOxOyNzihMuFF6MkFeGuNv8Vyc=";
 
   nativeBuildInputs = [ makeWrapper ];
 
@@ -51,7 +51,8 @@ buildGoModule rec {
 
   postFixup = ''
     wrapProgram $out/bin/xray \
-      --suffix V2RAY_LOCATION_ASSET : $assetsDrv/share/v2ray
+      --suffix V2RAY_LOCATION_ASSET : $assetsDrv/share/v2ray \
+      --suffix XRAY_LOCATION_ASSET : $assetsDrv/share/v2ray
   '';
 
   passthru = {
@@ -65,4 +66,3 @@ buildGoModule rec {
     maintainers = with lib.maintainers; [ iopq ];
   };
 }
-

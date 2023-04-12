@@ -26,21 +26,23 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
-#  networking.proxy.default = "socks5://127.0.0.1:10808/";
-#  networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain,192.168.2.0/8";
+  networking.proxy.default = "socks5://127.0.0.1:10808/";
+  networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain,192.168.2.0/8";
  
-   services.gvfs.enable = true;
+  services.gvfs.enable = true;
+   
+  nix.settings.experimental-features = "nix-command";
 
   # Enable networking
   networking.networkmanager.enable = true;
   
   #enable xraya
-  services.xraya.enable = true;
+  #services.xraya.enable = true;
   
   #enable xray
   #journalctl -fu xray
   services.xray.settingsFile = "/etc/nixos/config.json";
-#  services.xray.enable = true;
+  services.xray.enable = true;
 
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
@@ -203,14 +205,14 @@
     nix-prefetch-github
     samba
     pkgs.gnome3.gnome-tweaks
-    python310
-    python310Packages.pip
-    python310Packages.pysocks
-    cachix
+#    python310
+#    python310Packages.pip
+#    python310Packages.pysocks
+#    cachix
     cudatoolkit
     busybox
     gnomeExtensions.gsconnect
-    tts
+  #  tts
     
   ];
   
