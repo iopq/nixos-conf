@@ -7,17 +7,17 @@
   };
 
   
-  outputs = { self, nixpkgs, nixpkgs-stable }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, nix-software-center }:
     let
       system = "x86_64-linux";
-        overlay-stable = final: prev: {
-          stable = import nixpkgs-stable {
-           inherit system;
-           config.allowUnfree = true;
-          };
+      overlay-stable = final: prev: {
+        stable = import nixpkgs-stable {
+         inherit system;
+         config.allowUnfree = true;
+        };
       };
     in {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           # Overlays-module makes "pkgs.stable" available in configuration.nix
@@ -27,6 +27,9 @@
           ]; })
           ./configuration.nix
         ];
+        specialArgs = {
+          inherit inputs;
+        };
       };
     };
 }

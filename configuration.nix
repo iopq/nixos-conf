@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ inputs, config, pkgs, lib, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -193,9 +193,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  wget
-  #  appimage-run
-  #  v2raya
+    inputs.nix-software-center.packages.${system}.nix-software-center
     xray
     tun2socks
   #  dnscrypt-proxy2
@@ -212,7 +210,7 @@
     busybox
     gnomeExtensions.gsconnect
     tts
-    inputs.nix-software-center.packages.${system}.nix-software-center
+    
   ];
   
  # services.dnscrypt-proxy2.enable = false;
