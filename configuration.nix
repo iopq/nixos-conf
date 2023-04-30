@@ -37,12 +37,12 @@
   networking.networkmanager.enable = true;
   
   #enable xraya
-  #services.xraya.enable = true;
+  services.xraya.enable = true;
   
   #enable xray
   #journalctl -fu xray
   services.xray.settingsFile = "/etc/nixos/config.json";
-  services.xray.enable = true;
+  #services.xray.enable = true;
 
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
@@ -156,6 +156,7 @@
       smplayer
       
       chromium
+      nicotine-plus
     ];
   };
   
