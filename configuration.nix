@@ -37,6 +37,8 @@
   networking.networkmanager.enable = true;
   
   #enable xraya
+  #sudo tail -f /var/log/v2raya/v2raya.log
+  #nixos-rebuild switch --rollback
   services.xraya.enable = true;
   
   #enable xray
@@ -142,9 +144,9 @@
       tdesktop
       steam
       qbittorrent
-      
-      # wine-staging (version with experimental features)
-      stable.wineWowPackages.staging
+      piper
+      wineWowPackages.stagingFull #(version with experimental features)
+      #stable.wineWowPackages.staging
 
       # winetricks (all versions)
       winetricks
@@ -216,6 +218,9 @@
   #  tts
     
   ];
+  
+  #for mouse
+  services.ratbagd.enable = true;
   
  # services.dnscrypt-proxy2.enable = false;
  # services.dnscrypt-proxy2.settings = {
