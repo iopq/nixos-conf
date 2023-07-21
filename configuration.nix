@@ -155,7 +155,7 @@
       piper
       wineWowPackages.stagingFull #(version with experimental features)
       #stable.wineWowPackages.staging
-
+      #nur.repos.mic92.hello-nur
       # winetricks (all versions)
       winetricks
       
