@@ -13,11 +13,13 @@ let
   version = "3.0.1";
 
   src = fetchFromGitHub {
-    owner = "xbclub";
+    owner = "iopq";
     repo = "xraya";
-    rev = "v${version}";
-    sha256 = "gOLJfB8y+IxWsBdEZSIQihgctqRL93EBteSdrNEAT6c=";
+    rev = "54a3cb996ab9f4ae5cfaff9f2475f0db5bf95225";
+    sha256 = "gdT0VFcNkSd0TH1VJPnbErdoCBp077rcNWOJkaxfhi4=";
   };
+
+#  src = /home/iopq/sw/xraya;
 
   web = mkYarnPackage {
     inherit pname version;
@@ -45,7 +47,7 @@ buildGoModule {
   inherit pname version;
 
   src = "${src}/service";
-  vendorSha256 = "sha256-mQea2xyREZSGb/OELlebbRKTRjInjoqqepj3d+EiLaY=";
+  vendorSha256 = "sha256-Yz6+4ghiJf6a9TB4Sql5AY67dX0mLGhf6H4PVKGXSFE=";
 
   ldflags = [
     "-s"
@@ -69,7 +71,7 @@ buildGoModule {
     wrapProgram $out/bin/xraya \
       --prefix PATH ":" "${lib.makeBinPath [ xray ]}" \
       --prefix XDG_DATA_DIRS ":" ${assetsDir}/share \
-      --prefix ASSUME_NO_MOVING_GC_UNSAFE_RISK_IT_WITH ":" go1.20
+      --prefix ASSUME_NO_MOVING_GC_UNSAFE_RISK_IT_WITH ":" go1.20 
   '';
 
   meta = with lib; {

@@ -19,10 +19,10 @@ in {
 
       serviceConfig = {
         User = "root";
-        ExecStart = "${xraya}/bin/xraya --log-disable-timestamp";
+        ExecStart = "${xraya}/bin/xraya";
         LimitNPROC = 500;
         LimitNOFILE = 1000000;
-        Environment = "V2RAYA_LOG_FILE=/var/log/v2raya/v2raya.log";
+        Environment = "V2RAYA_LOG_FILE=/var/log/xraya/xraya.log";
         Restart = "on-failure";
         Type = "simple";
       };

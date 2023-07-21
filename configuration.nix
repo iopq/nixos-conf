@@ -2,6 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
+# shopt -s histappend
+# make this work later
+# also ctrl+shift+c doesn't work when no selection, so it's annoying
+
 { inputs, config, pkgs, lib, ... }:
 {
   imports =
@@ -216,7 +220,7 @@
 #    python310Packages.pip
 #    python310Packages.pysocks
 #    cachix
-    cudatoolkit
+#    cudatoolkit
     busybox
     #gnomeExtensions.gsconnect
   #  tts
