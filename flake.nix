@@ -20,14 +20,24 @@
     in {
       nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
         inherit system;
+        
         modules = [
-          nur.nixosModules.nur
+          
           # Overlays-module makes "pkgs.stable" available in configuration.nix
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable
-          #  (_: _: { xray = pkgs.callPackage ./xray/default.nix {} ;} )  
-          #  (_: _: { v2raya = pkgs.callPackage ./xraya/default.nix {} ;} ) 
-             nur.overlay
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [
+            overlay-stable
           ]; })
+
+          ({ pkgs, ... }:
+            let
+              nur-no-pkgs = import nur {
+                nurpkgs = import nixpkgs { system = "x86_64-linux"; };
+              };
+            in {
+              imports = [ nur-no-pkgs.repos.iopq.modules.xraya  ];
+              services.xraya.enable = true;
+          })
+          
           ./configuration.nix
         ];
         specialArgs = {

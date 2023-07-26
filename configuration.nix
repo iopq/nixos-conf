@@ -12,7 +12,6 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
  #     ./cachix.nix
-      ./xraya/xraya.nix
     ];
  
   #boot.loader.grub.enable = true;
@@ -43,7 +42,7 @@
   #enable xraya
   #sudo tail -f /var/log/v2raya/v2raya.log
   #nixos-rebuild switch --rollback
-  services.xraya.enable = true;
+  #services.xraya.enable = true;
   
   #enable xray
   #journalctl -fu xray
@@ -95,7 +94,6 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  #sound.enable = true;
   hardware.pulseaudio.enable = true;
   security.rtkit.enable = true;
   
@@ -114,25 +112,8 @@
 
   hardware.pulseaudio.support32Bit = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
   
   hardware.opengl.enable = true;
-  
-  #vaapi
-  #nixpkgs.config.packageOverrides = pkgs: {
-  #  vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  #};
-  #hardware.opengl = {
-  #  enable = true;
-  #  extraPackages = with pkgs; [
-  #    intel-media-driver # LIBVA_DRIVER_NAME=iHD
-  #    vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-  #    vaapiVdpau
-  #    libvdpau-va-gl
-  #  ];
-  #};
   
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   # fix unsuspend VRAM issues
@@ -155,8 +136,6 @@
       piper
       wineWowPackages.stagingFull #(version with experimental features)
       #stable.wineWowPackages.staging
-      #nur.repos.mic92.hello-nur
-      # winetricks (all versions)
       winetricks
       
       krita
@@ -256,11 +235,6 @@
   
   #https://github.com/repos-holder/nur-packages/blob/81503c5e70952a837c9be8a1412bc64091b50aa1/modules/tun2socks.nix
   
-  
-  
-  # Use Chinese mirror 
-  # nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
