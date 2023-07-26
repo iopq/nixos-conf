@@ -134,8 +134,8 @@
       steam
       qbittorrent
       piper
-      wineWowPackages.stagingFull #(version with experimental features)
-      #stable.wineWowPackages.staging
+      #wineWowPackages.stagingFull #(version with experimental features)
+      stable.wineWowPackages.staging
       winetricks
       
       krita
