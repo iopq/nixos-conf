@@ -41,7 +41,7 @@
   
   #enable xraya
   #sudo tail -f /var/log/v2raya/v2raya.log
-  #nixos-rebuild switch --rollback
+  #sudo nixos-rebuild switch --rollback
   #services.xraya.enable = true;
   
   #enable xray
@@ -63,7 +63,7 @@
   ];
   
   #fonts
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     noto-fonts-cjk
     babelstone-han
   ];
@@ -133,9 +133,8 @@
       tdesktop
       steam
       qbittorrent
-      piper
-      wineWowPackages.stagingFull #(version with experimental features)
-      #stable.wineWowPackages.staging
+      #wineWowPackages.stagingFull #(version with experimental features)
+      stable.wineWowPackages.staging
       winetricks
       
       krita
@@ -189,35 +188,24 @@
     inputs.nix-software-center.packages.${system}.nix-software-center
     xray
     tun2socks
-  #  dnscrypt-proxy2
     go
     gcc
     nix-prefetch-github
     samba
     pkgs.gnome3.gnome-tweaks
-#    python310
-#    python310Packages.pip
-#    python310Packages.pysocks
-#    cachix
-#    cudatoolkit
+    mission-center
     busybox
-    #gnomeExtensions.gsconnect
-  #  tts
-    
   ];
   
-  #for mouse
-  services.ratbagd.enable = true;
-  
- # services.dnscrypt-proxy2.enable = false;
- # services.dnscrypt-proxy2.settings = {
- # sources.public-resolvers = {
- #     urls = [ "https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md" ];
- #     cache_file = "public-resolvers.md";
- #     minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
- #     refresh_delay = 72;
- #   };
- # };
+  services.dnscrypt-proxy2.enable = false;
+  services.dnscrypt-proxy2.settings = {
+  sources.public-resolvers = {
+      urls = [ "https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md" ];
+      cache_file = "public-resolvers.md";
+      minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+      refresh_delay = 72;
+    };
+  };
   
   # I used these steps
   # sudo ip tuntap add mode tun dev tun0
