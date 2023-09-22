@@ -26,6 +26,7 @@
           # Overlays-module makes "pkgs.stable" available in configuration.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [
             overlay-stable
+  #          (_: _: { v2raya = pkgs.callPackage /etc/nixos/xraya/default.nix {} ;} ) 
           ]; })
 
           ({ pkgs, ... }:

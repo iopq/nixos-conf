@@ -11,8 +11,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+ #     /etc/nixos/xraya/xraya.nix
  #     ./cachix.nix
     ];
+    
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
  
   #boot.loader.grub.enable = true;
   #boot.loader.grub.version = 2;
@@ -33,8 +36,6 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain,192.168.2.0/8";
  
   services.gvfs.enable = true;
-   
-  nix.settings.experimental-features = "nix-command";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -42,7 +43,7 @@
   #enable xraya
   #sudo tail -f /var/log/v2raya/v2raya.log
   #sudo nixos-rebuild switch --rollback
-  #services.xraya.enable = true;
+  services.xraya.enable = true;
   
   #enable xray
   #journalctl -fu xray
@@ -197,15 +198,15 @@
     busybox
   ];
   
-  services.dnscrypt-proxy2.enable = false;
-  services.dnscrypt-proxy2.settings = {
-  sources.public-resolvers = {
-      urls = [ "https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md" ];
-      cache_file = "public-resolvers.md";
-      minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      refresh_delay = 72;
-    };
-  };
+  #services.dnscrypt-proxy2.enable = false;
+  #services.dnscrypt-proxy2.settings = {
+  #sources.public-resolvers = {
+  #    urls = [ "https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md" ];
+  #    cache_file = "public-resolvers.md";
+  #    minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+  #    refresh_delay = 72;
+  #  };
+  #};
   
   # I used these steps
   # sudo ip tuntap add mode tun dev tun0
