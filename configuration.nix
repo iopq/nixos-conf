@@ -11,17 +11,10 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
- #     /etc/nixos/xraya/xraya.nix
  #     ./cachix.nix
     ];
     
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
- 
-  #boot.loader.grub.enable = true;
-  #boot.loader.grub.version = 2;
-  #boot.loader.grub.device = "nodev";
-  #boot.loader.grub.efiSupport = true;
-  #boot.loader.grub.useOSProber = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -40,10 +33,10 @@
   # Enable networking
   networking.networkmanager.enable = true;
   
-  #enable xraya
+  #enable v2raya
   #sudo tail -f /var/log/v2raya/v2raya.log
   #sudo nixos-rebuild switch --rollback
-  services.xraya.enable = true;
+  #services.v2raya.enable = true;
   
   #enable xray
   #journalctl -fu xray
@@ -68,6 +61,42 @@
     noto-fonts-cjk
     babelstone-han
   ];
+  
+
+  # Enable OpenGL
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+ # hardware.nvidia = {
+
+    # Modesetting is required.
+#    modesetting.enable = true;
+
+    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+#    powerManagement.enable = false;
+    # Fine-grained power management. Turns off GPU when not in use.
+    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+#    powerManagement.finegrained = false;
+
+    # Use the NVidia open source kernel module (not to be confused with the
+    # independent third-party "nouveau" open source driver).
+    # Support is limited to the Turing and later architectures. Full list of 
+    # supported GPUs is at: 
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    # Only available from driver 515.43.04+
+    # Do not disable this unless your GPU is unsupported or if you have a good reason to.
+#    open = true;
+
+    # Enable the Nvidia settings menu,
+	# accessible via `nvidia-settings`.
+#    nvidiaSettings = true;
+
+    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+#    package = config.boot.kernelPackages.nvidiaPackages.beta;
+#  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -94,31 +123,26 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
-  hardware.pulseaudio.enable = true;
+  # Enable sound with pulseaudio set to true
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   
-#  services.pipewire = {
-#    enable = true;
-#    alsa.enable = true;
-#    alsa.support32Bit = true;
-#    pulse.enable = true;
-#    # If you want to use JACK applications, uncomment this
-#    #jack.enable = true;
+  # Enable sound with pipewire
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
-#  };
+  };
 
   hardware.pulseaudio.support32Bit = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
-  
-  hardware.opengl.enable = true;
-  
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  # fix unsuspend VRAM issues
-  hardware.nvidia.powerManagement.enable = true;
+  hardware.bluetooth.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.iopq = {
@@ -146,6 +170,17 @@
       
       chromium
       nicotine-plus
+      obs-studio
+      
+      stuntman
+      pavucontrol
+      
+      #bitcoin-abc
+      p7zip
+      
+      #blueman not solving my pairing issue
+      bluez
+      wireplumber
     ];
   };
   
@@ -154,7 +189,6 @@
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
-  hardware.opengl.driSupport32Bit = true;
   
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
