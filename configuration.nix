@@ -68,18 +68,23 @@
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    extraPackages = with pkgs; [
+ #     vaapiVdpau
+ #     libvdpau-va-gl
+      nvidia-vaapi-driver
+    ];
   };
 
- # hardware.nvidia = {
+  hardware.nvidia = {
 
     # Modesetting is required.
-#    modesetting.enable = true;
+    modesetting.enable = true;
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-#    powerManagement.enable = false;
+    powerManagement.enable = true;
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-#    powerManagement.finegrained = false;
+    powerManagement.finegrained = false;
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
@@ -88,19 +93,22 @@
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
     # Only available from driver 515.43.04+
     # Do not disable this unless your GPU is unsupported or if you have a good reason to.
-#    open = true;
+    open = true;
 
     # Enable the Nvidia settings menu,
 	# accessible via `nvidia-settings`.
-#    nvidiaSettings = true;
+    nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-#    package = config.boot.kernelPackages.nvidiaPackages.beta;
-#  };
+    #package = config.boot.kernelPackages.nvidiaPackages.beta;
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
+  
+  #Disable Wayland
+  services.xserver.displayManager.gdm.wayland = false;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -221,15 +229,12 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     inputs.nix-software-center.packages.${system}.nix-software-center
-    xray
-    tun2socks
     go
     gcc
     nix-prefetch-github
-    samba
     pkgs.gnome3.gnome-tweaks
     mission-center
-    busybox
+    libva-utils
   ];
   
   #services.dnscrypt-proxy2.enable = false;
