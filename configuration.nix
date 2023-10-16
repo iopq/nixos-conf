@@ -71,7 +71,7 @@
     extraPackages = with pkgs; [
  #     vaapiVdpau
  #     libvdpau-va-gl
-      nvidia-vaapi-driver
+       nvidia-vaapi-driver
     ];
   };
 
@@ -96,32 +96,31 @@
     open = true;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    #package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
-  
+
   #Disable Wayland
   services.xserver.displayManager.gdm.wayland = false;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  
+
   programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
   programs.kdeconnect.enable = true;
 
   # Enable KDE
   #services.xserver.displayManager.sddm.enable = true;
   #services.xserver.desktopManager.plasma5.enable = true;
-  
-  
+
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
@@ -134,7 +133,7 @@
   # Enable sound with pulseaudio set to true
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  
+
   # Enable sound with pipewire
   services.pipewire = {
     enable = true;
@@ -191,13 +190,13 @@
       wireplumber
     ];
   };
-  
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
-  
+
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
       extraPkgs = pkgs: with pkgs; [
@@ -205,11 +204,11 @@
       ];
     };
   };
-  
+
   environment.sessionVariables = {
     MOZ_ENABLE_WAYLAND = "1";
   };
-  
+
   services.flatpak.enable = true;
 
   # Enable automatic login for the user.
