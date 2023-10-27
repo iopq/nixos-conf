@@ -130,16 +130,15 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pulseaudio set to true
-  hardware.pulseaudio.enable = false;
+  # Enable sound with pulseaudio comment out
+  #hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
   # Enable sound with pipewire
   services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+#    alsa.enable = true;
+#    alsa.support32Bit = true;
+#    pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -172,11 +171,10 @@
       krita
       vlc
       kodi
-      mplayer
+      mpv
       smplayer
       
-      chromium
-      nicotine-plus
+      #chromium
       obs-studio
       
       stuntman
@@ -188,6 +186,9 @@
       #blueman not solving my pairing issue
       bluez
       wireplumber
+      exodus
+
+      dig
     ];
   };
 
