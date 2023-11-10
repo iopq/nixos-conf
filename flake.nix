@@ -1,7 +1,7 @@
 {
   description = "NixOS configuration with two or more channels";
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable-small"; 
+    nixpkgs.url = "nixpkgs/nixos-unstable"; 
     nixpkgs-stable.url = "nixpkgs/nixos-22.05";
     nix-software-center.url = "github:vlinkz/nix-software-center";
     nur.url = github:nix-community/NUR;
@@ -27,6 +27,7 @@
           ({ config, pkgs, ... }: { nixpkgs.overlays = [
             overlay-stable
   #          (_: _: { v2raya = pkgs.callPackage /etc/nixos/xraya/default.nix {} ;} ) 
+  #          (final: prev: { v2raya= prev.v2raya.override { v2ray = final.xray; }; })
           ]; })
 
           ({ pkgs, ... }:
