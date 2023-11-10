@@ -2,7 +2,7 @@
   description = "NixOS configuration with two or more channels";
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable"; 
-    nixpkgs-stable.url = "nixpkgs/nixos-22.05";
+    nixpkgs-stable.url = "nixpkgs/nixos-23.05";
     nix-software-center.url = "github:vlinkz/nix-software-center";
     nur.url = github:nix-community/NUR;
   };
