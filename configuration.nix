@@ -108,7 +108,7 @@
   services.xserver.videoDrivers = ["nvidia"];
 
   #Disable Wayland
-  services.xserver.displayManager.gdm.wayland = false;
+  #services.xserver.displayManager.gdm.wayland = false;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -166,6 +166,7 @@
       qbittorrent
       #wineWowPackages.stagingFull #(version with experimental features)
       stable.wineWowPackages.staging
+      #wineWowPackages.waylandFull
       winetricks
       
       krita
@@ -174,8 +175,8 @@
       mpv
       smplayer
       
-      #chromium
-      obs-studio
+      chromium
+      #obs-studio
       
       stuntman
       pavucontrol
@@ -189,6 +190,8 @@
       exodus
 
       dig
+      nftables
+      samba #ntlm_auth
     ];
   };
 
