@@ -20,6 +20,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  
+  #boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   networking.hostName = "desktop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -40,7 +42,7 @@
   
   #enable xray
   #journalctl -fu xray
-  services.xray.settingsFile = "/etc/nixos/config.json";
+  #services.xray.settingsFile = "/etc/nixos/config.json";
   #services.xray.enable = true;
 
   # Set your time zone.
@@ -146,6 +148,7 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+  
 
   hardware.pulseaudio.support32Bit = true;
   hardware.bluetooth.enable = true;

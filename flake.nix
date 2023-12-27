@@ -22,13 +22,6 @@
         inherit system;
         
         modules = [
-          
-          # Overlays-module makes "pkgs.stable" available in configuration.nix
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [
-            overlay-stable
-  #          (_: _: { v2raya = pkgs.callPackage /etc/nixos/xraya/default.nix {} ;} ) 
-  #          (final: prev: { v2raya= prev.v2raya.override { v2ray = final.xray; }; })
-          ]; })
 
           ({ pkgs, ... }:
             let
@@ -39,6 +32,14 @@
               imports = [ nur-no-pkgs.repos.iopq.modules.xraya  ];
               services.xraya.enable = true;
           })
+          
+          # Overlays-module makes "pkgs.stable" available in configuration.nix
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [
+            overlay-stable
+  #          (_: _: { v2raya = pkgs.callPackage /etc/nixos/v2raya/default.nix {} ;} )
+  #         (_: _: { nur-no-pkgs.repos.iopq.modules.xraya = pkgs.callPackage /etc/nixos/xraya/default.nix {} ;} ) 
+#           (final: prev: { v2raya = prev.v2raya.override { v2ray = final.xray; }; })
+          ]; })
           
           ./configuration.nix
         ];
