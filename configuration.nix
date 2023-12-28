@@ -38,7 +38,7 @@
   #enable v2raya
   #sudo tail -f /var/log/v2raya/v2raya.log
   #sudo nixos-rebuild switch --rollback
-  #services.v2raya.enable = true;
+  services.v2raya.enable = true;
   
   #enable xray
   #journalctl -fu xray
@@ -132,10 +132,11 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pulseaudio comment out
+  # Enable sound with pulseaudio, comment out to enable pipewire
   #hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
 
+  security.rtkit.enable = true;
+  
   # Enable sound with pipewire
   services.pipewire = {
 #    alsa.enable = true;
