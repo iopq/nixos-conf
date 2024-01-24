@@ -163,7 +163,7 @@
       firefox
       thunderbird
       git
-      gnome.gedit
+      gedit
       tdesktop
       steam
       qbittorrent
