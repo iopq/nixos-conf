@@ -30,7 +30,7 @@
               };
             in {
               imports = [ nur-no-pkgs.repos.iopq.modules.xraya  ];
-              #services.xraya.enable = true;
+              services.xraya.enable = true;
           })
           
           # Overlays-module makes "pkgs.stable" available in configuration.nix

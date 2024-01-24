@@ -38,7 +38,7 @@
   #enable v2raya
   #sudo tail -f /var/log/v2raya/v2raya.log
   #sudo nixos-rebuild switch --rollback
-  services.v2raya.enable = true;
+  #services.v2raya.enable = true;
   
   #enable xray
   #journalctl -fu xray
@@ -162,7 +162,6 @@
     packages = with pkgs; [
       firefox
       thunderbird
-      haruna
       git
       gnome.gedit
       tdesktop
@@ -189,7 +188,7 @@
       p7zip
       
       #blueman not solving my pairing issue
-      bluez
+      #bluez
       wireplumber
       exodus
 
