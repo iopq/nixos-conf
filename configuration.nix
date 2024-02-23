@@ -194,7 +194,9 @@
 
       dig
       nftables
-      samba #ntlm_auth
+      samba #ntlm_auth for starcraft
+      
+      pulseeffects
     ];
   };
 
