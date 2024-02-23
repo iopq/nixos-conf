@@ -196,7 +196,7 @@
       nftables
       samba #ntlm_auth for starcraft
       
-      pulseeffects
+      pulseeffects-legacy
     ];
   };
 
